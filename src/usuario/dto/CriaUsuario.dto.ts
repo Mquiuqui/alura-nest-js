@@ -1,16 +1,14 @@
-import { IsEmail, IsNotEmpty, IsString, IsUUID, MinLength } from 'class-validator'
-import { EmailEhUnico } from '../validator/email-eh-unico-validator'
+import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { EmailEhUnico } from '../validacao/email-eh-unico.validator';
 
 export class CriaUsuarioDTO {
+  @IsNotEmpty({ message: 'O nome não pode ser vazio' })
+  nome: string;
 
-    @IsNotEmpty({ message: 'O Nome não pode ser vázio' })
-    nome: string
+  @IsEmail(undefined, { message: 'O e-mail informado é inválido' })
+  @EmailEhUnico({ message: 'Já existe um usuário com este e-mail' })
+  email: string;
 
-    @IsEmail(undefined, { message: 'O email não pode ser vázio' })
-    @EmailEhUnico({ message: 'Já existe usuário com esse email' })
-    email: string
-
-    @MinLength(6, { message: 'A senha deve ser informada' })
-    senha: string
-
+  @MinLength(6, { message: 'A senha precisa ter pelo menos 6 caracteres' })
+  senha: string;
 }
